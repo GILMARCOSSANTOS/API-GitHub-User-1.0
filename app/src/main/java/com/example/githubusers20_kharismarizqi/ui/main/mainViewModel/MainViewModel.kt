@@ -2,6 +2,7 @@ package com.example.githubusers20_kharismarizqi.ui.main.mainViewModel
 
 import android.app.DownloadManager
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -36,8 +37,7 @@ class MainViewModel : ViewModel() {
             })
     }
 
-    fun getSearchUsers(): LiveData<ArrayList<User>>{
+    fun getSearchUsers(): LiveData<ArrayList<User>> {
         return listUsers
-
     }
 }

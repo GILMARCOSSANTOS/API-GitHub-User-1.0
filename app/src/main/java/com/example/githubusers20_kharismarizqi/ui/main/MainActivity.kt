@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     /*Global declare variables: */
-    private lateinit var viewModel: ViewModel
+    private lateinit var viewModel: MainViewModel
     private lateinit var adapter: UserAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity() {
         /* Functions: */
         hideActionBar()
         centerActionBar()
-        imageViewSearchUser()
-        editTexWriteUser()
+//        imageViewSearchUser()
+//        editTexWriteUser()
 
         /* Variables: */
         adapter = UserAdapter()
@@ -39,20 +39,15 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
             .get(MainViewModel::class.java)
 
-        rcclrVw_actvtMain_id.setHasFixedSize(true)
         rcclrVw_actvtMain_id.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rcclrVw_actvtMain_id.setHasFixedSize(true)
         rcclrVw_actvtMain_id.adapter = adapter
 
-    }
-
-    private fun imageViewSearchUser() {
         imgVw_search_actvtMain_id.setOnClickListener {
             searchUser()
         }
-    }
 
-    private fun editTexWriteUser() {
         edtTxt_searchUser_actvtMain_id.setOnKeyListener { v, keycode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keycode == KeyEvent.KEYCODE_ENTER) {
                 searchUser()
@@ -60,16 +55,46 @@ class MainActivity : AppCompatActivity() {
             }
             return@setOnKeyListener false
         }
+
+        viewModel.getSearchUsers().observe(this
+        ){
+            if (it != null) {
+                adapter.setList(it)
+                showLoading(false)
+            }
+        }
+
+//        viewModel.getSearchUsers().observe(this) {
+//
+//            if (it != null) {
+//                adapter.setList(it)
+//                showLoading(false)
+//            }
+//        }
+
     }
+
+//    private fun imageViewSearchUser() {
+//        imgVw_search_actvtMain_id.setOnClickListener {
+//            searchUser()
+//        }
+//    }
+
+//    private fun editTexWriteUser() {
+//        edtTxt_searchUser_actvtMain_id.setOnKeyListener { v, keycode, event ->
+//            if (event.action == KeyEvent.ACTION_DOWN && keycode == KeyEvent.KEYCODE_ENTER) {
+//                searchUser()
+//                return@setOnKeyListener true
+//            }
+//            return@setOnKeyListener false
+//        }
+
 
     private fun searchUser() {
         val query = edtTxt_searchUser_actvtMain_id.text.toString()
         if (query.isEmpty()) return
         showLoading(true)
-        viewModel.
-
-
-
+        viewModel.setSearchUsers(query)
     }
 
     private fun showLoading(state: Boolean) {
