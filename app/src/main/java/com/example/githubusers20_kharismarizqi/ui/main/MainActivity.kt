@@ -9,8 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubusers20_kharismarizqi.R
+import com.example.githubusers20_kharismarizqi.ui.data.model.User
 import com.example.githubusers20_kharismarizqi.ui.main.mainViewModel.MainViewModel
 import com.example.githubusers20_kharismarizqi.ui.main.mainViewModel.UserAdapter
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -33,6 +35,19 @@ class MainActivity : AppCompatActivity() {
         getSearchUser()
         recyclerViewSettings()
         settings()
+
+        /* 02 = CF: Objeto Dentista: */
+        var user = User(
+            login = "48556",
+            id = 15,
+            avatar = "Gilmarcos Santos"
+        )
+        println(user)
+
+        /* 02 = CF: Instanciar um objeto JSON: */
+        var gson = Gson()
+        var dentistaGson = gson.toJson(user)
+        println(dentistaGson)
     }
 
     private fun settings() {
